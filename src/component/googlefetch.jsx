@@ -6,11 +6,13 @@ export const GoogleFetch=(props)=>{
     const [storedata,setstoredata]  = useState([])
     const [error, seterror] = useState(false)
     const [page, setpage] = useState(1)
+    const [loading, setloading] = useState(false)
 
 
 
     useEffect(()=>{
         fetch()
+        setloading(true)
 
     },[props.inputval,page])
 
@@ -29,9 +31,11 @@ export const GoogleFetch=(props)=>{
 
         }).then((elem)=>{
             setstoredata(elem.data)
+            setloading(false)
 
         }).catch((err)=>{
         seterror(err)
+        setloading(false)
         })
 
     }
@@ -55,6 +59,10 @@ export const GoogleFetch=(props)=>{
     return(
         <div>
             
+              <div>
+                {loading && <h1>...loading </h1>}
+              </div>
+
             <table border="1" style={{margin:"10px"}}>
                <thead>
                 <tr>
