@@ -36,6 +36,7 @@ export const GoogleFetch=(props)=>{
 
 
     const handleDelete=(id)=>{
+        alert("Please confirm you want to delete this item")
         const updateddate = storedata.filter((elem,index)=>{
             return  index !== id
         })
