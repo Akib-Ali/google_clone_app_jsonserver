@@ -56,6 +56,7 @@ export const GoogleFetch=(props)=>{
                     <th>Date</th>
                     <th>DESCRIPTION</th>
                     <th>RATING</th>
+                    <th>Temprary Delete</th>
                     <th>DELETE NOTES</th>
                 </tr>
                </thead>

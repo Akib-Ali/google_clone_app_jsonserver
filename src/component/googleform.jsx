@@ -3,17 +3,12 @@ import { useState } from "react"
 
 export const GoogleForm=(props)=>{
 
-//   const [inputval,setinputval] = useState({
-//     title_note:"",
-//     date:"",
-//     decription:"",
-//     rating:"",
-// })
 
 const api="https://doctor-patient123.herokuapp.com/users"
 
 const handlesubmit=(e)=>{
     e.preventDefault()
+    alert("Successfully Add item")
    
    axios.post(`${api}` , props.inputval)
    .then(()=>{
