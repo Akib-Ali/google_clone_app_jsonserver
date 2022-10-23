@@ -33,6 +33,17 @@ export const GoogleFetch=(props)=>{
     console.log(storedata)
 
 
+
+
+    const handleDelete=(id)=>{
+        const updateddate = storedata.filter((elem,index)=>{
+            return  index !== id
+        })
+        setstoredata(updateddate)
+
+    }
+
+
     return(
         <div>
             
@@ -52,8 +63,10 @@ export const GoogleFetch=(props)=>{
                 return(
                     <GoogleUI
                         key={index}
+                        index={index}
                         id={index}
                         elem={elem}
+                        handleDelete= {handleDelete}
                     />
                 )
                })}

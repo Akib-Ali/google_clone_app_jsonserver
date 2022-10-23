@@ -9,7 +9,7 @@ export const GoogleUI=(props)=>{
                     <td>{props.elem.date}</td>
                     <td>{props.elem.decription}</td>
                     <td>{props.elem.rating}</td>
-                    <td><button>Delete Note</button></td>
+                    <td><button onClick={(()=> props.handleDelete(props.index))}>Delete Note</button></td>
                 </tr>
             </tbody>
     
