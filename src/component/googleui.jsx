@@ -11,7 +11,7 @@ export const GoogleUI=(props)=>{
     }
 
     return (
-        
+             <>
             <tbody>
                 <tr style={{ textDecorationColor:"red",textDecoration: strike ? "line-through" : "none"}}>
                     <td>{props.id}</td>
@@ -22,7 +22,11 @@ export const GoogleUI=(props)=>{
                     <td><button onClick={temphandledelete}>Temprarory Delete</button></td>
                     <td><button onClick={(()=> props.handleDelete(props.index))}>Delete Note</button></td>
                 </tr>
+        
             </tbody>
+
+        
+            </>
     
     )
 }

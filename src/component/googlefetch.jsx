@@ -5,20 +5,27 @@ export const GoogleFetch=(props)=>{
 
     const [storedata,setstoredata]  = useState([])
     const [error, seterror] = useState(false)
+    const [page, setpage] = useState(1)
 
 
 
     useEffect(()=>{
         fetch()
 
-    },[props.inputval])
+    },[props.inputval,page])
 
 
     const  fetch=()=>{
 
         axios({
              method:"get",
-             url:"https://doctor-patient123.herokuapp.com/users"
+             url:"https://doctor-patient123.herokuapp.com/users",
+
+             params:{
+                _page:page,
+                _limit:5
+             }
+
 
         }).then((elem)=>{
             setstoredata(elem.data)
@@ -73,8 +80,15 @@ export const GoogleFetch=(props)=>{
                 )
                })}
 
+               
+
             
             </table>
+
+            <div style={{display:"flex" ,gap:"40px" , width:"200px", margin:"auto", border:"2px solid red"}}>
+                <button  disabled={page==1} onClick={(()=> setpage(page-1))}>prev</button>
+                <button disabled={page.length-1} onClick={(()=> setpage(page+1))}>next</button>
+            </div>
         </div>
     )
 }
