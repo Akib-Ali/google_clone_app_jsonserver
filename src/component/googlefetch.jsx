@@ -7,6 +7,9 @@ export const GoogleFetch=(props)=>{
     const [error, seterror] = useState(false)
     const [page, setpage] = useState(1)
     const [loading, setloading] = useState(false)
+    const [sorttitle, setsorttitle]= useState("asc")
+    const [datesort, setdatesort] = useState("asc")
+    const [sortdescription, setsortdescription] = useState("asc")
 
 
 
@@ -14,7 +17,7 @@ export const GoogleFetch=(props)=>{
         fetch()
         setloading(true)
 
-    },[props.inputval,page])
+    },[props.inputval,page, sorttitle, datesort, sortdescription])
 
 
     const  fetch=()=>{
@@ -25,7 +28,10 @@ export const GoogleFetch=(props)=>{
 
              params:{
                 _page:page,
-                _limit:5
+                _limit:5,
+                _sort:"title_note,date,decription",
+                _order:`${sorttitle}, ${datesort} , ${sortdescription}`
+
              }
 
 
@@ -56,12 +62,43 @@ export const GoogleFetch=(props)=>{
     }
 
 
+
+    const handlesorting=()=>{
+
+        setsorttitle("desc")
+        setdatesort("desc")
+        setsortdescription("desc")
+    }
+
+
     return(
         <div>
             
               <div>
                 {loading && <h1>...loading </h1>}
               </div>
+
+
+              <div style={{display:"flex" ,  width:"350px",border:"2px solid red", margin:"auto", marginTop:"50px" , gap:"30px"}}>
+                {/* <button disabled={sorttitle == "asc"} onClick={(()=> setsorttitle("asc"))}>Title Ascending Order</button> 
+                <button disabled={sorttitle == "desc"} onClick={(()=> setsorttitle("desc"))}>Title Descending Order</button>  */}
+
+
+              </div>                                                   {/*sorting div  */}
+
+
+              <div style={{marginTop:"80px"}}>
+             
+             <select name="cars" id="cars" onClick={handlesorting}>
+             <option value="title_note">Sort By Title</option>
+            <option value="date">Sort By Date</option>
+            <option value="description">Sort By Description</option>
+            
+            </select>
+
+              </div>
+
+              {/* select box */}
 
             <table border="1" style={{margin:"10px"}}>
                <thead>
