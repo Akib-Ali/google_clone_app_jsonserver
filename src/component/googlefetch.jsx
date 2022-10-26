@@ -22,6 +22,7 @@ export const GoogleFetch=(props)=>{
 
     useEffect(()=>{
         fetch()
+        // handlefilter()
         setloading(true)
 
     },[props.inputval,page,sortname, sortvalue, fiterrating])
@@ -34,8 +35,8 @@ export const GoogleFetch=(props)=>{
              url:"https://doctor-patient123.herokuapp.com/products",
 
              params:{
-                _page:page,
-                _limit:15,
+                // _page:page,
+                // _limit:15,
                 _sort:"name, gender",
                 _order:`${sortname}`,
                 rating_gte:fiterrating
@@ -56,7 +57,7 @@ export const GoogleFetch=(props)=>{
     }
 
 
-    console.log(storedata)
+    // console.log(storedata)
 
 
 
@@ -186,7 +187,6 @@ export const GoogleFetch=(props)=>{
                     <th>Name</th>
                     <th>Color</th>
                     <th>Gender</th>
-                    <th>RATING</th>
                     <th>Final Price</th>
                     <th>Reveiew</th>
                     <th>Rating</th>

@@ -23,7 +23,7 @@ export const GoogleUI=(props)=>{
                     <td>{props.elem.name}</td>
                     <td>{props.elem.color}</td>
                     <td>{props.elem.gender}</td>
-                    <td>{props.elem.rating}</td>
+                
                     <td>{props.elem.final_price}</td>
                     <td>{props.elem.reviews}</td>
                     <td>{props.elem.rating}</td>

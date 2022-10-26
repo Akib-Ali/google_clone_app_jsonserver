@@ -7,10 +7,13 @@ export const GoogleMain=()=>{
 
 
     const [inputval,setinputval] = useState({
-        title_note:"",
-        date:"",
-        decription:"",
-        rating:"",
+        id:"",
+        images:"",
+        color:"",
+        gender:"",
+        final_price:"",
+        reviews:"",
+        rating:""
     })
 
 
