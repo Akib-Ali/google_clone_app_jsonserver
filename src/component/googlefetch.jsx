@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GoogleUI } from "./googleui";
+import { Box ,Text, VStack} from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup ,Button} from '@chakra-ui/react'
+ import { useSearchParams } from "react-router-dom";
+
 export const GoogleFetch=(props)=>{
 
     const [storedata,setstoredata]  = useState([])
@@ -13,37 +17,31 @@ export const GoogleFetch=(props)=>{
     const [fiterrating, setfilterrating] = useState(0)
 
     const sortoption= ['name' , "gender"]
+
+    const [searchParams, setSearchParams] = useSearchParams() 
+    const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || []) 
     
 
-    //  const [filter, setfilter] = useState("")
+    
     
 
 
 
     useEffect(()=>{
-        fetch()
+         fetch()
         // handlefilter()
         setloading(true)
 
-    },[props.inputval,page,sortname, sortvalue, fiterrating])
+    },[props.inputval,page,sortname, sortvalue, fiterrating,colorValues])
 
 
-    const  fetch=()=>{
+    const  fetch=(params)=>{
 
         axios({
              method:"get",
-             url:"https://doctor-patient123.herokuapp.com/products",
+             url:`https://doctor-patient123.herokuapp.com/products/?rating_gte=${fiterrating}&&_sort=name&_order=${sortname}`,params,
 
-             params:{
-                // _page:page,
-                // _limit:15,
-                _sort:"name, gender",
-                _order:`${sortname}`,
-                rating_gte:fiterrating
-                
-
-             }
-
+            
 
         }).then((elem)=>{
             setstoredata(elem.data)
@@ -111,6 +109,36 @@ export const GoogleFetch=(props)=>{
     }
 
 
+
+    const colorhandler=  (values)=>{
+        console.log(values)
+       SetcolorValues(values)
+    
+
+        
+    }
+
+
+    useEffect(() => {
+
+        
+        if (colorValues) {
+          setSearchParams({ color: colorValues });
+    
+          let params = {
+            color: searchParams.getAll('color')
+          }
+        
+        axios.get(`https://doctor-patient123.herokuapp.com/products`,params)
+      
+       fetch(params)
+    
+        }
+      
+      }, [colorValues, searchParams, setSearchParams])
+    
+
+
     return(
         <div>
             
@@ -119,9 +147,9 @@ export const GoogleFetch=(props)=>{
               </div>
 
 
-              <div style={{display:"flex" ,  width:"350px",border:"2px solid red", margin:"auto", marginTop:"50px" , gap:"30px"}}>
-                 <button disabled={sortname == "asc"} onClick={(()=> setsortname("asc"))}>Name (a-z)</button> 
-                <button disabled={sortname == "desc"} onClick={(()=> setsortname("desc"))}>Name (z-a)</button>  
+              <div style={{display:"flex" ,  width:"550px",border:"2px solid red", margin:"auto", marginTop:"50px" , gap:"30px"}}>
+                 <Button colorScheme={"blue"} disabled={sortname == "asc"} onClick={(()=> setsortname("asc"))}>Name (a-z)</Button> 
+                <Button colorScheme={"blue"} disabled={sortname == "desc"} onClick={(()=> setsortname("desc"))}>Name (z-a)</Button>  
                 <button>Gender (a-z)</button> 
                 <button>Gender(z-a)</button>  
 
@@ -137,20 +165,20 @@ export const GoogleFetch=(props)=>{
               
               <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"200px" , border:"2px solid red" , margin:"auto"}}>
                     
-                    <button style={{width:"80px"}} onClick={()=> handlefilter("MEN")}>Men</button>
-                    <button style={{width:"80px"}}  onClick={()=> handlefilter("WOMEN")}>Women</button>
+                    <Button colorScheme={"red"} onClick={()=> handlefilter("MEN")}>Men</Button>
+                    <Button  colorScheme={"red"}  onClick={()=> handlefilter("WOMEN")}>Women</Button>
                 </div>
 
            
              
                   <h2>Filter By Rating</h2>
 
-                <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"300px" , 
+                <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"500px" , 
                 border:"2px solid red" , margin:"auto" , marginTop:"50px"}}>
 
-                <button onClick={()=> setfilterrating(2)}>Greater Than 2</button>
-                <button onClick={()=> setfilterrating(3)}>Greater Than 3</button>
-                <button onClick={()=> setfilterrating(4)}>Greater Than 4</button>
+                <Button disabled={fiterrating==2} colorScheme={"blue"} onClick={()=> setfilterrating(2)}>Greater Than 2</Button>
+                <Button  disabled={fiterrating==3}colorScheme={"blue"} onClick={()=> setfilterrating(3)}>Greater Than 3</Button>
+                <Button  disabled={fiterrating==4} colorScheme={"blue"}onClick={()=> setfilterrating(4)}>Greater Than 4</Button>
 
                 </div>
 
@@ -176,6 +204,29 @@ export const GoogleFetch=(props)=>{
              </select>
 
               </div>
+
+
+
+
+            <Box mb="50px" border="2px solid green">
+
+             <Text>Filter By Color</Text>
+             <CheckboxGroup colorScheme='green' defaultValue={colorValues} onChange={colorhandler}>
+            <VStack spacing={[1, 5]} direction={['column', 'row']}>
+            <Checkbox value='AQUA BLUE'>AQUA BLUE</Checkbox>
+            <Checkbox value='BURGUNDY RED'>BURGUNDY RED</Checkbox>
+            <Checkbox value='NATURAL WHITE'>NATURAL WHITE</Checkbox>
+            <Checkbox value='BLACK & GREY (BLACK SOLE)'>BLACK & GREY (BLACK SOLE)</Checkbox>
+            <Checkbox value='BLACK & RED (BLACK SOLE)'> BLACK & RED (BLACK SOLE)</Checkbox>
+            </VStack>
+           </CheckboxGroup>
+             
+
+            </Box>
+
+
+
+
 
               {/* select box */}
 

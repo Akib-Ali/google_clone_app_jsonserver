@@ -44,7 +44,7 @@ const handlesubmit=(e)=>{
 
   }
 
-  console.log(props.inputval)
+  // console.log(props.inputval)
 
 
 
