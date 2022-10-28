@@ -74,31 +74,35 @@ export const GoogleFetch=(props)=>{
 
 
 
-    const handleSort= async (e)=>{
-        let value = e.target.value;
-        setsortvalue(value)
- 
-        //  return await axios.get(`https://doctor-patient123.herokuapp.com/products/?_sort=${value}&_order=asc`)
-        return await axios({
-            method :"get",
-            url:"https://doctor-patient123.herokuapp.com/products/",
-            params:{
-                _sort:`${value}`,
-                _order:"asc",
-                
 
-            }
-        })
-         .then((res)=>{
-          setstoredata(res.data)
-         })
-         .catch((err)=>{
-            console.log(err)
 
-         })
 
-    
+    const handlesort=(e)=>{
+      let value = e.target.value;
+      setsortvalue(value)
+      return  axios({
+        method:"get",
+        url:"https://doctor-patient123.herokuapp.com/products/",
+        params:{
+          _sort:`${value}`,
+          _order:"asc"
+
+        }
+      })
+
+      .then((result)=>{
+        setstoredata(result.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
     }
+   
+
+
+
+
 
 
   //   const handlefilter= async (value)=>{
@@ -153,19 +157,61 @@ export const GoogleFetch=(props)=>{
               </div>
 
 
-              <div style={{display:"flex" ,  width:"550px",border:"2px solid red", margin:"auto", marginTop:"50px" , gap:"30px"}}>
-                 <Button colorScheme={"blue"} disabled={sortname == "asc"} onClick={(()=> setsortname("asc"))}>Name (a-z)</Button> 
-                <Button colorScheme={"blue"} disabled={sortname == "desc"} onClick={(()=> setsortname("desc"))}>Name (z-a)</Button>  
-                <button>Gender (a-z)</button> 
-                <button>Gender(z-a)</button>  
+              <Text color={"blue"} fontSize={"3xl"}>Sorting With Simple Button Method</Text>
+               <div style={{display:"flex" ,  width:"550px",border:"2px solid red", margin:"auto", marginTop:"50px" ,   gap:"30px"}}>
+              
+              
+               <Button colorScheme={"blue"} disabled={sortname == "asc"} 
+                onClick={(()=> setsortname("asc"))}>Name (a-z)
+              </Button> 
+
+             <Button colorScheme={"blue"} disabled={sortname == "desc"} 
+             onClick={(()=> setsortname("desc"))}>Name (z-a)
+             </Button>  
+
+             </div>                                                   {/*sorting div  */}
+
+
+
+
+             
+
+             <div style={{marginTop:"80px" , marginBottom:"100px"}}>         {/*sorting with dropdow*/}
+             <Text color={"blue"} fontSize={"3xl"}>Sorting with drop down</Text>
+             
+           <select 
+             onChange={handlesort}
+             value={sortvalue}
+             >
+              <option>Please choose sorting by category</option>
+              {sortoption.map((item,index)=>(
+                <option value={item} key={index}>{item}</option>
+              ))}
+             </select>
+
+              </div>
 
 
 
 
 
 
+             
+             <h2>Filter By Rating</h2>
 
-              </div>                                                   {/*sorting div  */}
+           <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"500px" , 
+           border:"2px solid red" , margin:"auto" , marginTop:"50px"}}>
+
+          <Button disabled={fiterrating==2} colorScheme={"blue"} onClick={()=> setfilterrating(2)}>Greater Than 2</Button>
+          <Button  disabled={fiterrating==3}colorScheme={"blue"} onClick={()=> setfilterrating(3)}>Greater Than 3</Button>
+         <Button  disabled={fiterrating==4} colorScheme={"blue"}onClick={()=> setfilterrating(4)}>Greater Than 4</Button>
+
+        </div>                                                             {/*FILTER BY RATING  */}
+
+
+
+
+
 
                 <h1>Filter Button</h1>
               
@@ -180,40 +226,13 @@ export const GoogleFetch=(props)=>{
 
            
              
-                  <h2>Filter By Rating</h2>
-
-                <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"500px" , 
-                border:"2px solid red" , margin:"auto" , marginTop:"50px"}}>
-
-                <Button disabled={fiterrating==2} colorScheme={"blue"} onClick={()=> setfilterrating(2)}>Greater Than 2</Button>
-                <Button  disabled={fiterrating==3}colorScheme={"blue"} onClick={()=> setfilterrating(3)}>Greater Than 3</Button>
-                <Button  disabled={fiterrating==4} colorScheme={"blue"}onClick={()=> setfilterrating(4)}>Greater Than 4</Button>
-
-                </div>
 
 
 
 
 
 
-
-
-              <div style={{marginTop:"80px" , marginBottom:"100px"}}>
-             
-             <select
-             onChange={handleSort}
-             value={sortvalue}
-              >
-             <option>Please Selectvalue</option>
             
-             {sortoption.map((item,index)=>(
-                <option value={item} key={index}>{item}</option>
-             ))}
-            
-             </select>
-
-              </div>
-
 
 
 

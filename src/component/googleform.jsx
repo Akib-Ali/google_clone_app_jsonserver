@@ -22,16 +22,10 @@ const handlesubmit=(e)=>{
     reviews:"",
     rating:""
 
-
-
-
-    })
+ })
 
    })
    
-
-
-
 }
 
 
