@@ -12,34 +12,37 @@ export const GoogleFetch=(props)=>{
     const [page, setpage] = useState(1)
     const [loading, setloading] = useState(false)
     const [sortname, setsortname]= useState("asc")
-    // const [sortgender,setsortgender] = useState("desc")
     const [sortvalue, setsortvalue] = useState("")
     const [fiterrating, setfilterrating] = useState(0)
+    
+    const [filtergender,setfiltergender] = useState("WOMEN")
 
-    const sortoption= ['name' , "gender"]
+    const sortoption= ['name' , "color"]
 
     const [searchParams, setSearchParams] = useSearchParams() 
     const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || []) 
     
 
-    
+  
     
 
 
 
     useEffect(()=>{
          fetch()
-        // handlefilter()
+        
         setloading(true)
 
-    },[props.inputval,page,sortname, sortvalue, fiterrating,colorValues])
+
+    },[props.inputval,page,sortname, sortvalue, fiterrating,colorValues, filtergender])
 
 
     const  fetch=(params)=>{
 
         axios({
              method:"get",
-             url:`https://doctor-patient123.herokuapp.com/products/?rating_gte=${fiterrating}&&_sort=name&_order=${sortname}`,params,
+      url:
+    `https://doctor-patient123.herokuapp.com/products/?rating_gte=${fiterrating}&&_sort=name&_order=${sortname}&&gender=${filtergender}`, params,
 
             
 
@@ -98,15 +101,18 @@ export const GoogleFetch=(props)=>{
     }
 
 
-    const handlefilter= async (value)=>{
-        return await axios.get(`https://doctor-patient123.herokuapp.com/products?gender=${value}`)
-        .then((responce)=>{
-            setstoredata(responce.data)
-        })
-        .catch((err)=> console.log(err))
+  //   const handlefilter= async (value)=>{
+  //     return await axios.get(`https://doctor-patient123.herokuapp.com/products?gender=${value}`)
+  //     .then((responce)=>{
+  //         setstoredata(responce.data)
+  //     })
+  //     .catch((err)=> console.log(err))
 
 
-    }
+  // }
+
+
+    
 
 
 
@@ -129,9 +135,9 @@ export const GoogleFetch=(props)=>{
             color: searchParams.getAll('color')
           }
         
-        axios.get(`https://doctor-patient123.herokuapp.com/products`,params)
+        axios.get(`https://doctor-patient123.herokuapp.com/products`)
       
-       fetch(params)
+      fetch(params)
     
         }
       
@@ -143,7 +149,7 @@ export const GoogleFetch=(props)=>{
         <div>
             
               <div>
-                {loading && <h1>...loading </h1>}
+                {loading && <Text fontSize={"3xl"}>...loading </Text>}
               </div>
 
 
@@ -165,8 +171,11 @@ export const GoogleFetch=(props)=>{
               
               <div style={{display:"flex" ,gap:"30px" ,height:"50px", width:"200px" , border:"2px solid red" , margin:"auto"}}>
                     
-                    <Button colorScheme={"red"} onClick={()=> handlefilter("MEN")}>Men</Button>
-                    <Button  colorScheme={"red"}  onClick={()=> handlefilter("WOMEN")}>Women</Button>
+                    {/* <Button colorScheme={"red"} onClick={()=> handlefilter("MEN")}>Men</Button>
+                    <Button  colorScheme={"red"}  onClick={()=> handlefilter("WOMEN")}>Women</Button> */}
+
+                    <Button  onClick={(()=> setfiltergender("MEN"))} colorScheme={"red"}>Men</Button>
+                    <Button  onClick={(()=> setfiltergender("WOMEN"))} colorScheme={"red"}>WOMEN</Button>
                 </div>
 
            
