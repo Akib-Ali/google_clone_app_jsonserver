@@ -19,8 +19,6 @@ export const GoogleFetch=(props)=>{
 
     const sortoption= ['name' , "color"]
 
-    // const [searchParams, setSearchParams] = useSearchParams() 
-    // const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || []) 
 
 
 
