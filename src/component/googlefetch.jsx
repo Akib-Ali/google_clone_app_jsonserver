@@ -15,12 +15,19 @@ export const GoogleFetch=(props)=>{
     const [sortvalue, setsortvalue] = useState("")
     const [fiterrating, setfilterrating] = useState(0)
     
-    const [filtergender,setfiltergender] = useState("WOMEN")
+    const [filtergender,setfiltergender] = useState("WOMEN" )
 
     const sortoption= ['name' , "color"]
 
-    const [searchParams, setSearchParams] = useSearchParams() 
-    const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || []) 
+    // const [searchParams, setSearchParams] = useSearchParams() 
+    // const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || []) 
+
+
+
+    const [searchParams , setSearchParams] = useSearchParams()
+   const [colorValues, SetcolorValues] = useState(searchParams.getAll("color") || [])
+
+    
     
 
   
@@ -34,7 +41,7 @@ export const GoogleFetch=(props)=>{
         setloading(true)
 
 
-    },[props.inputval,page,sortname, sortvalue, fiterrating,colorValues, filtergender])
+    },[props.inputval,page,sortname, sortvalue, fiterrating, filtergender])
 
 
     const  fetch=(params)=>{
@@ -42,7 +49,7 @@ export const GoogleFetch=(props)=>{
         axios({
              method:"get",
       url:
-    `https://doctor-patient123.herokuapp.com/products/?rating_gte=${fiterrating}&&_sort=name&_order=${sortname}&&gender=${filtergender}`, params,
+    `https://doctor-patient123.herokuapp.com/products/?rating_gte=${fiterrating}&&gender=${filtergender}&&_sort=name&_order=${sortname}`, params,
 
             
 
@@ -120,33 +127,36 @@ export const GoogleFetch=(props)=>{
 
 
 
-    const colorhandler=  (values)=>{
-        console.log(values)
-       SetcolorValues(values)
-    
 
-        
+
+
+
+
+
+
+    const colorhandler=(values)=>{
+      // console.log(values)
+      SetcolorValues(values)
+     
+
     }
+  
 
+    useEffect(()=>{
 
-    useEffect(() => {
+      if(colorValues){
+        setSearchParams({color:colorValues});
 
-        
-        if (colorValues) {
-          setSearchParams({ color: colorValues });
-    
-          let params = {
-            color: searchParams.getAll('color')
-          }
-        
-        axios.get(`https://doctor-patient123.herokuapp.com/products`)
-      
-      fetch(params)
-    
+        let params={
+        color : searchParams.getAll("color")
+
         }
-      
-      }, [colorValues, searchParams, setSearchParams])
-    
+        
+        fetch(params)
+
+      }
+
+    },[colorValues,searchParams,setSearchParams])
 
 
     return(
