@@ -11,14 +11,14 @@ export const Serach=()=>{
 
     useEffect(()=>{
       fetch()
-    },[])
+    },[setsearchinput])
 
 
-    const fetch=()=>{
+    const fetch=(params)=>{
 
          axios({
             method:"get",
-            url:"https://doctor-patient123.herokuapp.com/products/"
+            url:"https://doctor-patient123.herokuapp.com/products/",params
          })
          .then((res)=>{
             setdata(res.data)
@@ -34,25 +34,22 @@ export const Serach=()=>{
 
     console.log(data)
 
-     console.log(searchinput)
+    
 
 
 
       const handleSearch=(e)=>{
         e.preventDefault()
-        axios({
-            method:"get",
-            url:"https://doctor-patient123.herokuapp.com/products/",
+        
+         
 
-            params:{
+           let params={
                 q:`${searchinput}`
             }
-        }).then((res)=>{
-            setdata(res.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
+
+            fetch(params)
         
+        setsearchinput("")
 
 
 
@@ -77,15 +74,15 @@ export const Serach=()=>{
              <Button type="submit"  colorScheme={"blue"} mt="30px" w="10%" onClick={handleSearch}>Search</Button> 
              
             </form>
+
+            <Button colorScheme={"yellow"}   w="10%" mt="15px" onClick={fetch}>Reset</Button>
         </Box>
 
+      
 
+         {data.length == 0 ? <Text fontSize={"3xl"} color="pink" mt={"20px"}>NO DATA FOUND</Text>  : 
 
         <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-
-
-        
-
           {data.map((elem,index)=>{
             return (
 
@@ -100,11 +97,8 @@ export const Serach=()=>{
             )
         })}
      
-
-        
-
-       
-        </Grid>
+    </Grid>
+  }
        </Box>
     )
 }
