@@ -1,6 +1,7 @@
 import { Text,Box,Image ,Grid,Input, Button} from "@chakra-ui/react"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 export const Serach=()=>{
 
     const [data,setdata]= useState([])
@@ -85,7 +86,7 @@ export const Serach=()=>{
         <Grid templateColumns='repeat(4, 1fr)' gap={6}>
           {data.map((elem,index)=>{
             return (
-
+                <Link to={`/search/${elem.id}`}>
                 <Box h={"300px"} w={"300px"} border="2px solid grey" key={index}> 
                 <Image src={elem.images}/>
                 <Text>{elem.name}</Text> 
@@ -94,6 +95,7 @@ export const Serach=()=>{
                   
                 
                 </Box>
+                </Link>
             )
         })}
      
