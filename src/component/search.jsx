@@ -33,7 +33,7 @@ export const Serach=()=>{
 
     }
 
-    console.log(data)
+    console.log("my data",data)
 
     
 
